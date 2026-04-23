@@ -1,0 +1,12 @@
+# Exclude anything that should not land in the Docker build context.
+# A smaller context = faster 'docker build' (less data sent to the daemon).
+
+node_modules
+npm-debug.log*
+.env
+.env.*
+tests/
+*.test.js
+*.spec.js
+.git
+.gitignore
