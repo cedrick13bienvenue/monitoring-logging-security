@@ -1,0 +1,10 @@
+services:
+  app:
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region:          "${AWS_REGION:-eu-west-1}"
+        awslogs-group:           "/monitoring-lab/app"
+        awslogs-stream:          "node-app"
+        awslogs-create-group:    "true"
+        awslogs-datetime-format: "%Y-%m-%dT%H:%M:%S"
