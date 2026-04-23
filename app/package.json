@@ -1,0 +1,23 @@
+{
+  "name": "observability-node-app",
+  "version": "1.0.0",
+  "description": "Express API instrumented with Prometheus metrics for the observability lab",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev":   "node src/server.js",
+    "test":  "mocha 'tests/**/*-test.js' --exit --timeout 5000"
+  },
+  "dependencies": {
+    "express":    "^4.18.2",
+    "prom-client": "^15.1.0"
+  },
+  "devDependencies": {
+    "chai":      "^4.4.1",
+    "mocha":     "^10.2.0",
+    "supertest": "^6.3.4"
+  },
+  "overrides": {
+    "serialize-javascript": ">=7.0.5"
+  }
+}
