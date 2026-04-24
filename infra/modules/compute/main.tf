@@ -15,7 +15,7 @@ data "aws_ami" "amazon_linux_2" {
 
 resource "aws_key_pair" "monitoring" {
   key_name   = "${var.project_name}-key"
-  public_key = file(var.public_key_path)
+  public_key = file(pathexpand("~/.ssh/monitoring.pub"))
 
   tags = {
     Name    = "${var.project_name}-key"
