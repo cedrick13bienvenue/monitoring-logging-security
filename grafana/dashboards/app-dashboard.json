@@ -125,7 +125,7 @@
       "datasource": { "type": "prometheus", "uid": "prometheus" },
       "targets": [
         {
-          "expr": "node_app_process_uptime_seconds",
+          "expr": "time() - node_app_process_start_time_seconds",
           "legendFormat": "Uptime",
           "refId": "A"
         }
