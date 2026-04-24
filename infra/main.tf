@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
+    http = {
+      source  = "hashicorp/http"
+      version = "~> 3.0"
+    }
   }
 
   backend "s3" {
@@ -31,22 +35,29 @@ provider "aws" {
   }
 }
 
+data "http" "my_ip" {
+  url = "https://checkip.amazonaws.com"
+}
+
+locals {
+  my_ip = "${chomp(data.http.my_ip.response_body)}/32"
+}
+
 # ── Modules ───────────────────────────────────────────────────────────────────
 
 module "networking" {
   source       = "./modules/networking"
   project_name = var.project_name
   aws_region   = var.aws_region
-  my_ip        = var.my_ip
+  my_ip        = local.my_ip
 }
 
 module "compute" {
-  source          = "./modules/compute"
-  project_name    = var.project_name
-  subnet_id       = module.networking.public_subnet_id
-  sg_id           = module.networking.monitoring_sg_id
-  instance_type   = var.instance_type
-  public_key_path = var.public_key_path
+  source        = "./modules/compute"
+  project_name  = var.project_name
+  subnet_id     = module.networking.public_subnet_id
+  sg_id         = module.networking.monitoring_sg_id
+  instance_type = var.instance_type
 }
 
 module "cloudwatch" {

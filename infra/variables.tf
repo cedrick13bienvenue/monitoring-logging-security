@@ -21,19 +21,9 @@ variable "environment" {
   }
 }
 
-variable "my_ip" {
-  description = "Your public IP in CIDR notation (x.x.x.x/32) — restricts SSH access to the monitoring server"
-  type        = string
-}
-
 variable "instance_type" {
   description = "EC2 instance type for the monitoring server"
   type        = string
   default     = "t3.micro"
 }
 
-variable "public_key_path" {
-  description = "Path to the SSH public key file on your local machine"
-  type        = string
-  default     = "~/.ssh/id_rsa.pub"
-}
