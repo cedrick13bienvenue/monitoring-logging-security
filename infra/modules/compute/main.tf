@@ -23,12 +23,49 @@ resource "aws_key_pair" "monitoring" {
   }
 }
 
+resource "aws_iam_role" "ec2_monitoring" {
+  name = "${var.project_name}-ec2-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "ec2.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+
+  tags = { Project = var.project_name }
+}
+
+resource "aws_iam_role_policy" "ec2_cloudwatch" {
+  name = "${var.project_name}-ec2-cw-policy"
+  role = aws_iam_role.ec2_monitoring.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect   = "Allow"
+      Action   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents", "logs:DescribeLogStreams"]
+      Resource = "arn:aws:logs:*:*:*"
+    }]
+  })
+}
+
+resource "aws_iam_instance_profile" "ec2_monitoring" {
+  name = "${var.project_name}-ec2-profile"
+  role = aws_iam_role.ec2_monitoring.name
+
+  tags = { Project = var.project_name }
+}
+
 resource "aws_instance" "monitoring" {
   ami                    = data.aws_ami.amazon_linux_2.id
   instance_type          = var.instance_type
   subnet_id              = var.subnet_id
   vpc_security_group_ids = [var.sg_id]
   key_name               = aws_key_pair.monitoring.key_name
+  iam_instance_profile   = aws_iam_instance_profile.ec2_monitoring.name
 
   user_data = <<-EOF
     #!/bin/bash
