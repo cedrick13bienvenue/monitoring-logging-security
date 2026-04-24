@@ -4,7 +4,7 @@
 .terraform/
 .terraform.lock.hcl
 node_modules/
-screenshots/
 infra/backend/terraform.tfstate
 infra/backend/terraform.tfstate.backup
 infra/backend/.terraform/
+infra/ansible/inventory.ini

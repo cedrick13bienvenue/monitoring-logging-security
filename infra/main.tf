@@ -12,6 +12,10 @@ terraform {
       source  = "hashicorp/http"
       version = "~> 3.0"
     }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.0"
+    }
   }
 
   backend "s3" {
@@ -77,4 +81,12 @@ module "guardduty" {
   source       = "./modules/guardduty"
   project_name = var.project_name
   environment  = var.environment
+}
+
+resource "local_file" "ansible_inventory" {
+  filename = "${path.root}/ansible/inventory.ini"
+  content  = <<-EOT
+    [monitoring]
+    ${module.compute.public_ip} ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/monitoring ansible_ssh_common_args='-o StrictHostKeyChecking=no' ansible_python_interpreter=/usr/bin/python3
+  EOT
 }
