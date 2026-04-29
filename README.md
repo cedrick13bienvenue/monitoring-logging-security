@@ -219,7 +219,7 @@ for i in {1..20}; do curl -s http://localhost:3000 > /dev/null; done
 
 ![Local Prometheus targets](screenshots/03-local-prometheus-targets.png)
 
-**Grafana dashboard** — open [http://localhost:3001](http://localhost:3001) (admin / admin123):
+**Grafana dashboard** — open [http://localhost:3001](http://localhost:3001)
 
 ![Local Grafana dashboard](screenshots/04-local-grafana-dashboard.png)
 
