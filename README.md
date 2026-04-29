@@ -403,6 +403,24 @@ for i in {1..20}; do curl -s http://localhost:3000 > /dev/null; done
 
 ---
 
+---
+
+## Investigation Report
+
+A full 2-page report documenting the observability and security insights from this lab is available here:
+
+**[REPORT.md — Metrics, Alerts, CloudWatch, CloudTrail & GuardDuty Insights](REPORT.md)**
+
+The report covers:
+- Prometheus instrumentation design and what the metrics revealed under load
+- Alert rule verification — `AppDown` triggered and resolved end-to-end
+- CloudWatch log pipeline architecture and why IAM instance profiles replace static credentials
+- CloudTrail audit trail — every Terraform action recorded with actor, timestamp, and resource
+- GuardDuty findings and what zero findings means in a correctly configured environment
+- Key insights on Ansible vs user_data, credential management, and the Compose override pattern
+
+---
+
 ### Stage 6 — Teardown
 
 ```bash
