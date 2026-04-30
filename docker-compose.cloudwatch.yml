@@ -3,7 +3,7 @@ services:
     logging:
       driver: awslogs
       options:
-        awslogs-region:          "${AWS_REGION:-eu-west-1}"
+        awslogs-region:          "${AWS_REGION}"
         awslogs-group:           "/monitoring-lab/app"
         awslogs-stream:          "node-app"
         awslogs-create-group:    "true"
